@@ -86,17 +86,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Image.asset(ImageAssets.icBigSunny),
+                                    Expanded(
+                                        child: Image.asset(
+                                            ImageAssets.icBigSunny)),
                                     Text(
                                       '${data.list.first.temp.average.toStringAsFixed(1)}°C',
                                       style: textStyle(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 52),
+                                          fontSize: 47),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
                                     const Text(
                                       'Sunny',
                                       style: TextStyle(
-                                        fontSize: 36,
+                                        fontSize: 30,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -113,7 +118,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 15,
+                                height: 20,
                               ),
                               Expanded(
                                   flex: 2,
@@ -123,57 +128,78 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          containerWidget(
-                                              image: ImageAssets.icWind,
-                                              until: 'km/h',
-                                              value: data.list.first.wind_speed
-                                                  .toString()),
-                                          containerWidget(
+                                          Expanded(
+                                            child: containerWidget(
+                                                image: ImageAssets.icWind,
+                                                until: 'km/h',
+                                                value: data
+                                                    .list.first.wind_speed
+                                                    .toString()),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            child: containerWidget(
                                               image: ImageAssets.icHumidity,
                                               until: '%',
                                               value: data.list.first.humidity
                                                   .toString(),
-                                              padding: 20),
-                                          containerWidget(
-                                              image: ImageAssets.icWind,
-                                              until: 'mmHg',
-                                              value: data.list.first.pressure
-                                                  .toString(),
-                                              padding: 15),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            child: containerWidget(
+                                                image:
+                                                    ImageAssets.icPressureGauge,
+                                                until: 'mmHg',
+                                                value: data.list.first.pressure
+                                                    .toString(),
+                                                padding: 10),
+                                          ),
                                         ],
                                       ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
                                       Expanded(
-                                          child: GridView.count(
-                                        crossAxisCount: 2,
-                                        mainAxisSpacing: 16,
-                                        crossAxisSpacing: 28,
-                                        childAspectRatio: 5 / 2,
-                                        children: [
-                                          containerTemp(
-                                              image: ImageAssets.icAverageMax,
-                                              title: 'Average max',
-                                              value: data
-                                                  .list.first.temp.average_max
-                                                  .toStringAsFixed(2)),
-                                          containerTemp(
-                                              image: ImageAssets.icAverageMin,
-                                              title: 'Average min',
-                                              value: data
-                                                  .list.first.temp.average_min
-                                                  .toStringAsFixed(2)),
-                                          containerTemp(
-                                              image: ImageAssets.recordMax,
-                                              title: 'Record max',
-                                              value: data
-                                                  .list.first.temp.record_max
-                                                  .toStringAsFixed(2)),
-                                          containerTemp(
-                                              image: ImageAssets.recordMin,
-                                              title: 'Record min',
-                                              value: data
-                                                  .list.first.temp.record_min
-                                                  .toStringAsFixed(2)),
-                                        ],
+                                          child: MediaQuery.removePadding(
+                                        context: context,
+                                        removeTop: true,
+                                        child: GridView.count(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 16,
+                                          crossAxisSpacing: 28,
+                                          childAspectRatio: 5 / 2,
+                                          children: [
+                                            containerTemp(
+                                                image: ImageAssets.icAverageMax,
+                                                title: 'Average max',
+                                                value: data
+                                                    .list.first.temp.average_max
+                                                    .toStringAsFixed(2)),
+                                            containerTemp(
+                                                image: ImageAssets.icAverageMin,
+                                                title: 'Average min',
+                                                value: data
+                                                    .list.first.temp.average_min
+                                                    .toStringAsFixed(2)),
+                                            containerTemp(
+                                                image: ImageAssets.recordMax,
+                                                title: 'Record max',
+                                                value: data
+                                                    .list.first.temp.record_max
+                                                    .toStringAsFixed(2)),
+                                            containerTemp(
+                                                image: ImageAssets.recordMin,
+                                                title: 'Record min',
+                                                value: data
+                                                    .list.first.temp.record_min
+                                                    .toStringAsFixed(2)),
+                                          ],
+                                        ),
                                       ))
                                     ],
                                   ))
@@ -228,30 +254,34 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: textStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
+        Expanded(
+          flex: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: textStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              value,
-              style: textStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w300,
+              Text(
+                '$value°C',
+                style: textStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 6,
+              ),
+            ],
+          ),
         ),
-        Image.asset(image),
+        Expanded(flex: 2,child: Image.asset(image)),
       ],
     );
   }
